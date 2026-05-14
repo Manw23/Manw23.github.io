@@ -45,14 +45,13 @@
             align-items: center;
             gap: 12px;
             cursor: pointer;
-            font-size: 1.2em;
         }
 
         .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            max-width: 1750px;
+            max-width: 1800px;
             margin: 50px auto;
             padding: 0 30px;
         }
@@ -110,7 +109,7 @@
     <header>
         <h1>GAMES</h1>
         <input type="text" class="search-bar" placeholder="Search games..." onkeyup="searchGames(this)">
-        <button onclick="cycleTheme()" style="font-size:28px;background:none;border:none;cursor:pointer;">🌙</button>
+        <button onclick="cycleTheme()" style="font-size:32px;background:none;border:none;cursor:pointer;">🌙</button>
         <div class="user-area" onclick="toggleSidebar()">
             <span id="userIcon" style="font-size:32px;">🧑</span>
             <span id="usernameDisplay">Guest</span>
@@ -237,7 +236,6 @@
             <span onclick="chooseIcon(this)">🐉</span><span onclick="chooseIcon(this)">🌈</span>
             <span onclick="chooseIcon(this)">🧿</span><span onclick="chooseIcon(this)">🔥</span>
             <span onclick="chooseIcon(this)">🦾</span><span onclick="chooseIcon(this)">🎩</span>
-            <span onclick="chooseIcon(this)">🦁</span><span onclick="chooseIcon(this)">🍕</span>
         </div>
     </div>
 
@@ -255,6 +253,20 @@
     <script>
         let currentUser = localStorage.getItem("username") || "Guest";
         let currentIcon = localStorage.getItem("userIcon") || "🧑";
+        let currentTheme = 0;
+
+        const themes = [
+            "linear-gradient(135deg, #0f0c29, #302b63, #24243e)",
+            "linear-gradient(135deg, #001122, #003355, #006688)",
+            "linear-gradient(135deg, #220000, #440000, #660000)",
+            "linear-gradient(135deg, #002200, #004400, #006600)",
+            "linear-gradient(135deg, #330033, #660066, #990099)"
+        ];
+
+        function cycleTheme() {
+            currentTheme = (currentTheme + 1) % themes.length;
+            document.body.style.background = themes[currentTheme];
+        }
 
         function updateUserDisplay() {
             document.getElementById("usernameDisplay").textContent = currentUser;
@@ -296,10 +308,6 @@
         }
 
         function showCommentBox(gameId) {
-            if (currentUser === "Guest") {
-                alert("You must login or sign up to comment!");
-                return;
-            }
             document.getElementById('commentModal').style.display = "block";
         }
 
@@ -310,12 +318,25 @@
         function postComment() {
             const input = document.getElementById('commentInput');
             if (input.value.trim() === "") return;
-            alert("✅ Comment posted: " + input.value);
+            const history = document.getElementById('commentHistory');
+            const p = document.createElement('p');
+            p.style.borderLeft = "4px solid #00ffff";
+            p.style.paddingLeft = "12px";
+            p.style.margin = "12px 0";
+            p.textContent = currentUser + ": " + input.value;
+            history.appendChild(p);
             input.value = "";
+        }
+
+        function searchGames(input) {
+            const filter = input.value.toUpperCase();
+            document.querySelectorAll('.game-card').forEach(card => {
+                const title = card.querySelector('h3').textContent.toUpperCase();
+                card.style.display = title.includes(filter) ? "" : "none";
+            });
         }
 
         updateUserDisplay();
     </script>
 </body>
-</html>
 </html>
