@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMES | Manw23's Hub</title>
-    
-    <!-- FIXED FAVICON -->
     <link rel="icon" href="https://www.innersloth.com/wp-content/uploads/2021/06/among-us-favicon.png" type="image/png">
-
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         
@@ -20,85 +18,266 @@
         }
 
         header {
-            background: rgba(0, 0, 0, 0.95);
-            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.98);
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 6px solid #ff00ff;
+            border-bottom: 8px solid #ff00ff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        h1 { font-size: 3.2em; text-shadow: 0 0 20px #ff00ff; margin: 0; }
+        h1 {
+            font-size: 3.8em;
+            text-shadow: 0 0 25px #ff00ff;
+            margin: 0;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-bar {
+            padding: 14px;
+            width: 420px;
+            background: #1a0033;
+            border: 3px solid #ff00ff;
+            color: white;
+        }
 
         .user-area {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             cursor: pointer;
+        }
+
+        .tabs {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .tabs button {
+            background: transparent;
+            color: white;
+            border: 3px solid #ff00ff;
+            padding: 12px 30px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .tabs button.active {
+            background: #ff00ff;
+            color: black;
         }
 
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1600px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1750px;
             margin: 40px auto;
-            padding: 0 20px;
+            padding: 0 30px;
         }
 
         .game-card {
-            background: rgba(255,255,255,0.1);
-            border: 4px solid #ff00ff;
-            border-radius: 15px;
+            background: rgba(255,255,255,0.08);
+            border: 5px solid #ff00ff;
+            border-radius: 18px;
             overflow: hidden;
-            transition: 0.4s;
+            transition: all 0.4s;
         }
 
-        .game-card:hover { transform: scale(1.08); box-shadow: 0 0 40px #00ffff; }
+        .game-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px #00ffff;
+        }
 
         .game-card img {
             width: 100%;
-            height: 230px;
+            height: 245px;
             object-fit: cover;
         }
 
-        .game-info { padding: 15px; text-align: center; }
+        .game-info {
+            padding: 18px;
+            text-align: center;
+        }
 
-        .players { color: #00ff00; margin: 8px 0; }
+        .players { color: #00ff00; margin: 10px 0; }
 
         button {
             background: #ff00ff;
             color: white;
             border: none;
-            padding: 10px 18px;
-            margin: 4px;
-            font-family: 'Press Start 2P', cursive;
+            padding: 12px 24px;
+            margin: 5px;
+            font-family: inherit;
             cursor: pointer;
         }
 
         button:hover { background: #00ffff; color: black; }
 
-        .reaction { font-size: 1.6em; cursor: pointer; margin: 0 8px; }
+        .reaction { font-size: 1.8em; cursor: pointer; margin: 0 12px; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -480px;
+            width: 460px;
+            height: 100vh;
+            background: #1a0033;
+            border-left: 8px solid #ff00ff;
+            transition: 0.5s;
+            padding: 30px;
+            overflow-y: auto;
+            z-index: 3000;
+        }
+
+        .sidebar.open { right: 0; }
     </style>
 </head>
 <body>
     <header>
         <h1>GAMES</h1>
-        <div class="user-area" onclick="toggleSidebar()">
-            <span id="usernameDisplay">Guest</span>
+        <input type="text" class="search-bar" placeholder="Search games..." onkeyup="searchGames(this)">
+        <div class="controls">
+            <button onclick="toggleTheme()">🌙</button>
+            <div class="user-area" onclick="toggleSidebar()">
+                <span id="userIcon" style="font-size:32px;">🧑</span>
+                <span id="usernameDisplay">Guest</span>
+            </div>
         </div>
     </header>
 
-    <!-- SIDEBAR -->
+    <div class="tabs">
+        <button class="active" onclick="filterCategory('all')">ALL GAMES</button>
+        <button onclick="filterCategory('popular')">BEST SELLERS</button>
+        <button onclick="filterCategory('new')">NEW RELEASES</button>
+        <button onclick="filterCategory('browser')">BROWSER ONLY</button>
+    </div>
+
+    <div class="game-grid" id="gameContainer">
+        <!-- Game 1 -->
+        <div class="game-card" data-category="popular">
+            <img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Among_Us_cover_art.jpg" alt="Among Us">
+            <div class="game-info">
+                <h3>AMONG US</h3>
+                <div class="players">5,672 playing now</div>
+                <button onclick="window.open('https://www.innersloth.com/games/among-us/', '_blank')">PLAY NOW</button>
+                <span class="reaction" onclick="toggleLike(this)">❤️</span>
+                <span class="reaction" onclick="toggleDislike(this)">👎</span>
+                <button onclick="showRandomComments()">COMMENTS</button>
+            </div>
+        </div>
+
+        <!-- Game 2 -->
+        <div class="game-card" data-category="popular">
+            <img src="https://upload.wikimedia.org/wikipedia/en/5/57/Minecraft_cover.png" alt="Minecraft">
+            <div class="game-info">
+                <h3>MINECRAFT</h3>
+                <div class="players">28,943 playing now</div>
+                <button onclick="window.open('https://www.minecraft.net/en-us', '_blank')">PLAY NOW</button>
+                <span class="reaction" onclick="toggleLike(this)">❤️</span>
+                <span class="reaction" onclick="toggleDislike(this)">👎</span>
+                <button onclick="showRandomComments()">COMMENTS</button>
+            </div>
+        </div>
+
+        <!-- Game 3 -->
+        <div class="game-card" data-category="popular">
+            <img src="https://www.roblox.com/images/og-image.png" alt="Roblox">
+            <div class="game-info">
+                <h3>ROBLOX</h3>
+                <div class="players">789,123 playing now</div>
+                <button onclick="window.open('https://www.roblox.com', '_blank')">PLAY NOW</button>
+                <span class="reaction" onclick="toggleLike(this)">❤️</span>
+                <span class="reaction" onclick="toggleDislike(this)">👎</span>
+                <button onclick="showRandomComments()">COMMENTS</button>
+            </div>
+        </div>
+
+        <!-- Game 4 -->
+        <div class="game-card" data-category="popular">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Fortnite_Cover_Art.jpg/800px-Fortnite_Cover_Art.jpg" alt="Fortnite">
+            <div class="game-info">
+                <h3>FORTNITE</h3>
+                <div class="players">156,789 playing now</div>
+                <button onclick="window.open('https://www.fortnite.com', '_blank')">PLAY NOW</button>
+                <span class="reaction" onclick="toggleLike(this)">❤️</span>
+                <span class="reaction" onclick="toggleDislike(this)">👎</span>
+                <button onclick="showRandomComments()">COMMENTS</button>
+            </div>
+        </div>
+
+        <!-- Game 5 -->
+        <div class="game-card" data-category="new">
+            <img src="https://upload.wikimedia.org/wikipedia/en/3/3f/Geometry_Dash_cover_art.png" alt="Geometry Dash">
+            <div class="game-info">
+                <h3>GEOMETRY DASH</h3>
+                <div class="players">82,345 playing now</div>
+                <button onclick="window.open('https://geometrydash.com', '_blank')">PLAY NOW</button>
+                <span class="reaction" onclick="toggleLike(this)">❤️</span>
+                <span class="reaction" onclick="toggleDislike(this)">👎</span>
+                <button onclick="showRandomComments()">COMMENTS</button>
+            </div>
+        </div>
+
+        <!-- Game 6 -->
+        <div class="game-card" data-category="browser">
+            <img src="https://terraria.org/img/Terraria_Logo.png" alt="Terraria">
+            <div class="game-info">
+                <h3>TERRARIA</h3>
+                <div class="players">48,912 playing now</div>
+                <button onclick="window.open('https://terraria.org', '_blank')">PLAY NOW</button>
+                <span class="reaction" onclick="toggleLike(this)">❤️</span>
+                <span class="reaction" onclick="toggleDislike(this)">👎</span>
+                <button onclick="showRandomComments()">COMMENTS</button>
+            </div>
+        </div>
+
+        <!-- Game 7 -->
+        <div class="game-card" data-category="popular">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Rocket_League_logo.svg/800px-Rocket_League_logo.svg.png" alt="Rocket League">
+            <div class="game-info">
+                <h3>ROCKET LEAGUE</h3>
+                <div class="players">112,456 playing now</div>
+                <button onclick="window.open('https://www.rocketleague.com', '_blank')">PLAY NOW</button>
+                <span class="reaction" onclick="toggleLike(this)">❤️</span>
+                <span class="reaction" onclick="toggleDislike(this)">👎</span>
+                <button onclick="showRandomComments()">COMMENTS</button>
+            </div>
+        </div>
+
+        <!-- Game 8 -->
+        <div class="game-card" data-category="browser">
+            <img src="https://krunker.io/img/krunker-logo.png" alt="Krunker.io">
+            <div class="game-info">
+                <h3>KRUNKER.IO</h3>
+                <div class="players">41,289 playing now</div>
+                <button onclick="window.open('https://krunker.io', '_blank')">PLAY NOW</button>
+                <span class="reaction" onclick="toggleLike(this)">❤️</span>
+                <span class="reaction" onclick="toggleDislike(this)">👎</span>
+                <button onclick="showRandomComments()">COMMENTS</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <span class="close" onclick="toggleSidebar()">×</span>
+        <span onclick="toggleSidebar()" style="float:right;font-size:40px;cursor:pointer;color:#ff00ff;">×</span>
         <h2>PROFILE</h2>
         <p><strong>Name:</strong> <span id="sidebarUsername">Guest</span></p>
-        <input id="newUsername" placeholder="New Name" style="width:100%;padding:8px;margin:10px 0;">
+        <input id="newUsername" placeholder="New Name" style="width:100%;padding:10px;margin:10px 0;">
         <button onclick="changeUsername()">CHANGE NAME</button>
 
-        <h3>Choose Icon (20 Options)</h3>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;font-size:35px;">
+        <h3>Choose Icon</h3>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:15px;font-size:42px;">
             <span onclick="chooseIcon(this)">🧑</span><span onclick="chooseIcon(this)">👾</span>
             <span onclick="chooseIcon(this)">🚀</span><span onclick="chooseIcon(this)">🎮</span>
             <span onclick="chooseIcon(this)">🐱</span><span onclick="chooseIcon(this)">🔥</span>
@@ -106,189 +285,24 @@
             <span onclick="chooseIcon(this)">🕹️</span><span onclick="chooseIcon(this)">🌌</span>
             <span onclick="chooseIcon(this)">💀</span><span onclick="chooseIcon(this)">👑</span>
             <span onclick="chooseIcon(this)">🦊</span><span onclick="chooseIcon(this)">🍄</span>
-            <span onclick="chooseIcon(this)">🚀</span><span onclick="chooseIcon(this)">🧿</span>
             <span onclick="chooseIcon(this)">🐉</span><span onclick="chooseIcon(this)">🌈</span>
-        </div>
-        <button onclick="toggleSidebar()" style="margin-top:20px;width:100%;">CLOSE</button>
-    </div>
-
-    <div class="game-grid">
-        <!-- 8 Games - No duplicates -->
-        <div class="game-card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Among_Us_cover_art.jpg" alt="Among Us">
-            <div class="game-info">
-                <h3>AMONG US</h3>
-                <div class="players">4,872 playing now</div>
-                <button onclick="window.open('https://www.innersloth.com/games/among-us/', '_blank')">PLAY NOW</button>
-                <span class="reaction" onclick="toggleLike(this)">❤️</span>
-                <span class="reaction" onclick="toggleDislike(this)">👎</span>
-                <button onclick="showRandomComments(1)">COMMENTS</button>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/5/57/Minecraft_cover.png" alt="Minecraft">
-            <div class="game-info">
-                <h3>MINECRAFT</h3>
-                <div class="players">23,145 playing now</div>
-                <button onclick="window.open('https://www.minecraft.net/en-us', '_blank')">PLAY NOW</button>
-                <span class="reaction" onclick="toggleLike(this)">❤️</span>
-                <span class="reaction" onclick="toggleDislike(this)">👎</span>
-                <button onclick="showRandomComments(2)">COMMENTS</button>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://www.roblox.com/images/og-image.png" alt="Roblox">
-            <div class="game-info">
-                <h3>ROBLOX</h3>
-                <div class="players">734,291 playing now</div>
-                <button onclick="window.open('https://www.roblox.com', '_blank')">PLAY NOW</button>
-                <span class="reaction" onclick="toggleLike(this)">❤️</span>
-                <span class="reaction" onclick="toggleDislike(this)">👎</span>
-                <button onclick="showRandomComments(3)">COMMENTS</button>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Fortnite_Cover_Art.jpg/800px-Fortnite_Cover_Art.jpg" alt="Fortnite">
-            <div class="game-info">
-                <h3>FORTNITE</h3>
-                <div class="players">145,672 playing now</div>
-                <button onclick="window.open('https://www.fortnite.com', '_blank')">PLAY NOW</button>
-                <span class="reaction" onclick="toggleLike(this)">❤️</span>
-                <span class="reaction" onclick="toggleDislike(this)">👎</span>
-                <button onclick="showRandomComments(4)">COMMENTS</button>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/3/3f/Geometry_Dash_cover_art.png" alt="Geometry Dash">
-            <div class="game-info">
-                <h3>GEOMETRY DASH</h3>
-                <div class="players">71,234 playing now</div>
-                <button onclick="window.open('https://geometrydash.com', '_blank')">PLAY NOW</button>
-                <span class="reaction" onclick="toggleLike(this)">❤️</span>
-                <span class="reaction" onclick="toggleDislike(this)">👎</span>
-                <button onclick="showRandomComments(5)">COMMENTS</button>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://terraria.org/img/Terraria_Logo.png" alt="Terraria">
-            <div class="game-info">
-                <h3>TERRARIA</h3>
-                <div class="players">42,189 playing now</div>
-                <button onclick="window.open('https://terraria.org', '_blank')">PLAY NOW</button>
-                <span class="reaction" onclick="toggleLike(this)">❤️</span>
-                <span class="reaction" onclick="toggleDislike(this)">👎</span>
-                <button onclick="showRandomComments(6)">COMMENTS</button>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Rocket_League_logo.svg/800px-Rocket_League_logo.svg.png" alt="Rocket League">
-            <div class="game-info">
-                <h3>ROCKET LEAGUE</h3>
-                <div class="players">98,432 playing now</div>
-                <button onclick="window.open('https://www.rocketleague.com', '_blank')">PLAY NOW</button>
-                <span class="reaction" onclick="toggleLike(this)">❤️</span>
-                <span class="reaction" onclick="toggleDislike(this)">👎</span>
-                <button onclick="showRandomComments(7)">COMMENTS</button>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://krunker.io/img/krunker-logo.png" alt="Krunker.io">
-            <div class="game-info">
-                <h3>KRUNKER.IO</h3>
-                <div class="players">35,671 playing now</div>
-                <button onclick="window.open('https://krunker.io', '_blank')">PLAY NOW</button>
-                <span class="reaction" onclick="toggleLike(this)">❤️</span>
-                <span class="reaction" onclick="toggleDislike(this)">👎</span>
-                <button onclick="showRandomComments(8)">COMMENTS</button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Login / Sign Up Modals -->
-    <div id="loginModal" class="modal" style="display:none">
-        <div class="modal-content">
-            <span class="close" onclick="closeModals()">×</span>
-            <h2>LOGIN</h2>
-            <input id="loginEmail" type="email" placeholder="Email" style="width:100%;padding:10px;margin:10px 0;"><br>
-            <input id="loginPass" type="password" placeholder="Password" style="width:100%;padding:10px;margin:10px 0;"><br>
-            <button onclick="login()">LOGIN</button>
+            <span onclick="chooseIcon(this)">🧿</span><span onclick="chooseIcon(this)">🔥</span>
+            <span onclick="chooseIcon(this)">🦾</span><span onclick="chooseIcon(this)">🎩</span>
+            <span onclick="chooseIcon(this)">🦁</span><span onclick="chooseIcon(this)">🍕</span>
+            <span onclick="chooseIcon(this)">🦄</span><span onclick="chooseIcon(this)">🌵</span>
         </div>
     </div>
-
-    <div id="signupModal" class="modal" style="display:none">
-        <div class="modal-content">
-            <span class="close" onclick="closeModals()">×</span>
-            <h2>SIGN UP</h2>
-            <input id="signupEmail" type="email" placeholder="Email" style="width:100%;padding:10px;margin:10px 0;"><br>
-            <input id="signupPass" type="password" placeholder="Password" style="width:100%;padding:10px;margin:10px 0;"><br>
-            <button onclick="signup()">CREATE ACCOUNT</button>
-        </div>
-    </div>
-
-    <!-- Comments Modal -->
-    <div id="commentsModal" class="modal" style="display:none">
-        <div class="modal-content">
-            <span class="close" onclick="closeModals()">×</span>
-            <h2 id="modalGameTitle">Live Comments</h2>
-            <div id="commentsList"></div>
-            <div id="commentInputArea" style="display:none;margin-top:15px;">
-                <input id="userComment" placeholder="Write a comment..." style="width:100%;padding:10px;">
-                <button onclick="postComment()">POST COMMENT</button>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>Made with ❤️ by Manw23 • 2026</p>
-    </footer>
 
     <script>
         let currentUser = localStorage.getItem("username") || "Guest";
+        let currentIcon = localStorage.getItem("userIcon") || "🧑";
 
         function updateUserDisplay() {
             document.getElementById("usernameDisplay").textContent = currentUser;
             document.getElementById("sidebarUsername").textContent = currentUser;
+            document.getElementById("userIcon").textContent = currentIcon;
         }
 
-        function showLogin() { document.getElementById('loginModal').style.display = "block"; }
-        function showSignup() { document.getElementById('signupModal').style.display = "block"; }
-        function closeModals() {
-            document.getElementById('loginModal').style.display = "none";
-            document.getElementById('signupModal').style.display = "none";
-            document.getElementById('commentsModal').style.display = "none";
-        }
-
-        function login() {
-            const email = document.getElementById('loginEmail').value;
-            if (email) {
-                currentUser = email.split('@')[0];
-                localStorage.setItem("username", currentUser);
-                updateUserDisplay();
-                alert("✅ Logged in as " + currentUser);
-                closeModals();
-            }
-        }
-
-        function signup() {
-            const email = document.getElementById('signupEmail').value;
-            if (email) {
-                currentUser = email.split('@')[0];
-                localStorage.setItem("username", currentUser);
-                updateUserDisplay();
-                alert("✅ Account created! Welcome " + currentUser);
-                closeModals();
-            }
-        }
-
-        // Sidebar
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("open");
         }
@@ -303,10 +317,11 @@
         }
 
         function chooseIcon(el) {
-            alert("✅ Icon updated! (Demo - saved for this session)");
+            currentIcon = el.textContent;
+            localStorage.setItem("userIcon", currentIcon);
+            updateUserDisplay();
         }
 
-        // Like / Dislike
         function toggleLike(btn) {
             const card = btn.parentElement.parentElement;
             const dislikeBtn = card.querySelectorAll('.reaction')[1];
@@ -321,51 +336,24 @@
             likeBtn.textContent = "❤️";
         }
 
-        // Game-specific comments
-        const gameComments = {
-            1: ["sus af", "vented on me", "who was it?", "impostor got me again"],
-            2: ["creeper blew up my house", "built a huge castle", "best survival game"],
-            3: ["just hit 1M robux", "come play with me", "this game is addictive"],
-            4: ["victory royale!", "default dance", "best battle royale"],
-            5: ["beat deadlocked", "impossible levels", "music slaps"],
-            6: ["ate 500 people", "snake king", "too fast"],
-            7: ["insane aerials", "best car soccer game"],
-            8: ["headshot machine", "krunker better than cod"]
-        };
+        function showRandomComments() {
+            const comments = ["keeps crashing", "too many hackers", "used to be better", "super laggy", "finally won", "pay to win ruined it", "boring now", "my team sucks"];
+            let text = "💬 Live Comments:\n\n";
+            for (let i = 0; i < 6; i++) {
+                text += comments[Math.floor(Math.random() * comments.length)] + "\n";
+            }
+            alert(text);
+        }
 
-        function showRandomComments(gameId) {
-            const modal = document.getElementById('commentsModal');
-            const list = document.getElementById('commentsList');
-            list.innerHTML = "";
-
-            const comments = gameComments[gameId] || ["good game", "fun lobby", "nice update"];
-
-            comments.forEach(text => {
-                const p = document.createElement('p');
-                p.style.margin = "12px 0";
-                p.style.paddingLeft = "12px";
-                p.style.borderLeft = "4px solid #ff00ff";
-                p.textContent = text;
-                list.appendChild(p);
+        function searchGames(input) {
+            const filter = input.value.toUpperCase();
+            document.querySelectorAll('.game-card').forEach(card => {
+                const title = card.querySelector('h3').textContent.toUpperCase();
+                card.style.display = title.includes(filter) ? "" : "none";
             });
-
-            // Show comment input only if logged in
-            document.getElementById('commentInputArea').style.display = (currentUser !== "Guest") ? "block" : "none";
-            
-            modal.style.display = "block";
         }
 
-        function postComment() {
-            if (currentUser === "Guest") {
-                alert("You must be signed in to comment!");
-                return;
-            }
-            const input = document.getElementById('userComment');
-            if (input.value.trim()) {
-                alert("✅ Comment posted: " + input.value);
-                input.value = "";
-            }
-        }
+        updateUserDisplay();
     </script>
 </body>
 </html>
