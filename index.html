@@ -18,67 +18,69 @@
         }
 
         header {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-bottom: 4px solid #ff00ff;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 25px;
+            border-bottom: 5px solid #ff00ff;
         }
 
         h1 {
-            font-size: 3.5em;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            font-size: 3.8em;
+            text-shadow: 0 0 15px #ff00ff, 0 0 25px #00ffff;
             margin: 10px;
         }
 
         .subtitle {
-            font-size: 1.2em;
+            font-size: 1.3em;
             color: #00ffff;
         }
 
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 40px auto;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1300px;
+            margin: 50px auto;
             padding: 0 20px;
         }
 
         .game-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 3px solid #ff00ff;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 4px solid #ff00ff;
+            border-radius: 15px;
             overflow: hidden;
-            transition: all 0.4s;
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
         }
 
         .game-card:hover {
-            transform: scale(1.08) rotate(2deg);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.9);
             border-color: #00ffff;
         }
 
         .game-card img {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
         }
 
         .game-info {
-            padding: 15px;
+            padding: 20px;
         }
 
         .game-info h3 {
-            margin: 10px 0;
+            margin: 12px 0;
             color: #00ffff;
+            font-size: 1.4em;
         }
 
         button {
             background: #ff00ff;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 14px 30px;
             font-family: 'Press Start 2P', cursive;
+            font-size: 1em;
             cursor: pointer;
             margin-top: 10px;
             transition: 0.3s;
@@ -86,30 +88,14 @@
 
         button:hover {
             background: #00ffff;
-            color: #000;
-            transform: translateY(-3px);
+            color: black;
+            transform: translateY(-4px);
         }
 
         footer {
-            margin-top: 60px;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.9);
-            font-size: 0.9em;
-        }
-
-        .nav {
-            margin: 20px 0;
-        }
-
-        .nav a {
-            color: #00ffff;
-            margin: 0 15px;
-            text-decoration: none;
-        }
-
-        .nav a:hover {
-            color: #ff00ff;
-            text-decoration: underline;
+            margin-top: 80px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.95);
         }
     </style>
 </head>
@@ -120,101 +106,78 @@
         <p><strong>Manw23's Creation</strong></p>
     </header>
 
-    <div class="nav">
-        <a href="#">Home</a>
-        <a href="#">Popular</a>
-        <a href="#">New Releases</a>
-        <a href="#">Community</a>
-    </div>
-
     <div class="game-grid">
-        <!-- Original Games -->
+
         <div class="game-card">
-            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxITEhUSEhMVFRUVFRYWFRUXFxUVFhcWFRUXFhUWGBUYHiggGBolHRUXITEhJSkrLi4uGB8zODMtNygtLisBCgoKDg0OGxAQGy0lHSMtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKy0tLS0tLS0tLS0tLS0tLS0tLf/AABEIARMAtwMBIgACEQEDEQH/..." alt="Among Us">
+            <img src="https://images.unsplash.com/photo-1611996575749-79a3ae1e0c97?w=600" alt="Among Us">
             <div class="game-info">
                 <h3>AMONG US</h3>
-                <button onclick="playGame('Among Us')">PLAY NOW</button>
+                <button onclick="window.open('https://www.innersloth.com/games/among-us/', '_blank')">PLAY NOW</button>
             </div>
         </div>
 
         <div class="game-card">
-            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEhUTExIVFRUXGBcXGBgYFxcYHRgXGhgaGBoYGBkYHSggGBslHRoYITEhJSkrLi4uGiAzODMtNygtLisBCgoKDg0OGxAQGy0lICUvLS0vLS0wLS0tLS0tLS0tLy0tLS0vMi0tLS0tLy0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBEQACEQEDEQH/..." alt="Minecraft">
+            <img src="https://images.unsplash.com/photo-1587573089697-8c6c4c3e8c8f?w=600" alt="Minecraft">
             <div class="game-info">
                 <h3>MINECRAFT</h3>
-                <button onclick="playGame('Minecraft')">PLAY NOW</button>
+                <button onclick="window.open('https://www.minecraft.net/en-us', '_blank')">PLAY NOW</button>
             </div>
         </div>
 
         <div class="game-card">
-            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTExMWFhUXGBkYFxgYGB8YHxgaHRoXGxkdGBkaHiggGholHx0ZITEiJSkrLi4uGB8zODMsNygtLisBCgoKDg0OGxAQGy8lICUvLS0rLy0tLS0tLS0tLy0tLS0tLS0tLS0tLS0tLy0vLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAKgBLAMBIgACEQEDEQH/..." alt="Roblox">
+            <img src="https://images.unsplash.com/photo-1616588587683-4d6f8f0b9c0c?w=600" alt="Roblox">
             <div class="game-info">
                 <h3>ROBLOX</h3>
-                <button onclick="playGame('Roblox')">PLAY NOW</button>
+                <button onclick="window.open('https://www.roblox.com', '_blank')">PLAY NOW</button>
             </div>
         </div>
 
         <div class="game-card">
-            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTExMVFRUXGBcXGBgYGB0eHRcWGhgYFxcaHRgYHSggGB0lGxcYITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0mICUtLS0tNS0tLS0vLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAKgBLAMBEQACEQEDEQH/..." alt="Fortnite">
+            <img src="https://images.unsplash.com/photo-1542751110-8d2c8e8e4f2d?w=600" alt="Fortnite">
             <div class="game-info">
                 <h3>FORTNITE</h3>
-                <button onclick="playGame('Fortnite')">PLAY NOW</button>
+                <button onclick="window.open('https://www.fortnite.com', '_blank')">PLAY NOW</button>
             </div>
         </div>
 
-        <!-- Added Games -->
+        <!-- Extra Games -->
         <div class="game-card">
-            <img src="https://via.placeholder.com/300x180/00ff00/000000?text=VALORANT" alt="Valorant">
+            <img src="https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=600" alt="Valorant">
             <div class="game-info">
                 <h3>VALORANT</h3>
-                <button onclick="playGame('Valorant')">PLAY NOW</button>
+                <button onclick="window.open('https://playvalorant.com', '_blank')">PLAY NOW</button>
             </div>
         </div>
 
         <div class="game-card">
-            <img src="https://via.placeholder.com/300x180/ff0000/ffffff?text=LEAGUE" alt="League of Legends">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600" alt="League of Legends">
             <div class="game-info">
                 <h3>LEAGUE OF LEGENDS</h3>
-                <button onclick="playGame('League of Legends')">PLAY NOW</button>
+                <button onclick="window.open('https://www.leagueoflegends.com', '_blank')">PLAY NOW</button>
             </div>
         </div>
 
         <div class="game-card">
-            <img src="https://via.placeholder.com/300x180/ffff00/000000?text=GTA+V" alt="GTA V">
+            <img src="https://images.unsplash.com/photo-1616587226960-4a03badbe8bf?w=600" alt="GTA V">
             <div class="game-info">
                 <h3>GTA V</h3>
-                <button onclick="playGame('GTA V')">PLAY NOW</button>
+                <button onclick="window.open('https://www.rockstargames.com/gta-v', '_blank')">PLAY NOW</button>
             </div>
         </div>
 
         <div class="game-card">
-            <img src="https://via.placeholder.com/300x180/00ffff/000000?text=TERRARIA" alt="Terraria">
+            <img src="https://images.unsplash.com/photo-1551105370-9c5f2c7a1b3a?w=600" alt="Terraria">
             <div class="game-info">
                 <h3>TERRARIA</h3>
-                <button onclick="playGame('Terraria')">PLAY NOW</button>
+                <button onclick="window.open('https://terraria.org', '_blank')">PLAY NOW</button>
             </div>
         </div>
+
     </div>
 
     <footer>
         <p>Made with ❤️ by Manw23 • 2026</p>
-        <p>More games coming soon...</p>
+        <p>More epic games coming soon...</p>
     </footer>
-
-    <script>
-        function playGame(gameName) {
-            alert(`🚀 Launching ${gameName}... \n\n(Imagine the game starting here!)`);
-            console.log(`${gameName} game launched!`);
-        }
-
-        // Keyboard Easter Egg
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'g' || e.key === 'G') {
-                document.body.style.background = 'linear-gradient(135deg, #ff00ff, #00ffff)';
-                setTimeout(() => {
-                    document.body.style.background = 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)';
-                }, 800);
-            }
-        });
-    </script>
 </body>
 </html>
